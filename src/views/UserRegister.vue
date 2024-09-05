@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import { addUser, findUserByEmail } from '../database.js';
-
 export default {
   name: 'RegisterPage',
   data() {
@@ -44,21 +42,49 @@ export default {
     };
   },
   methods: {
-    handleRegister() {
-      if (findUserByEmail(this.email)) {
-        alert('Email já cadastrado!');
-        return;
+    formatDate(date) {
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`; // Formata a data para dd/MM/yyyy
+    },
+    async handleRegister() {
+      try {
+        const formattedDate = this.formatDate(this.birthdate);
+
+        const response = await fetch('http://localhost:8080/api/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: this.fullName,
+            email: this.email,
+            curso: this.course,
+            faculdade: this.college,
+            senha: this.password,
+            data: formattedDate,  // Envia a data formatada
+            simuladosUmRealizado: 0,
+            respostasSimuladoUmCorretas: 0,
+            respostasSimuladoUmIncorretas: 0,
+            flashcardsRealizados: 0,
+            flashcardLembrei: 0,
+            flashcardQuaseNaoLembrei: 0,
+            flashcardNaoLembrei: 0,
+            simuladosDoisRealizado: 0,
+            respostasSimuladoDoisCorretas: 0,
+            respostasSimuladoDoisIncorretas: 0,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao registrar usuário');
+        }
+
+        alert('Registro realizado com sucesso!');
+        this.$router.push('/login');
+      } catch (error) {
+        console.error(error);
+        alert('Erro ao tentar registrar');
       }
-      const newUser = {
-        email: this.email,
-        nome: this.fullName,
-        date: this.birthdate,
-        college: this.college,
-        course: this.course,
-        password: this.password,
-      };
-      addUser(newUser);
-      this.$router.push('/login');
     },
   },
 };

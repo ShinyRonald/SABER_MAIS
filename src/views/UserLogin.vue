@@ -40,7 +40,6 @@ export default {
   },
 };
 </script>
-
   
 <style scoped>
 .login-container {
@@ -108,4 +107,3 @@ export default {
   background-color: #218838;
 }
 </style>
-  

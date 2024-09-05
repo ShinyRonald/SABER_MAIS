@@ -7,6 +7,11 @@ export const infoUsers = [
       college: 'Unijorge',
       course: 'Engenharia da computação',
       password: 'p01016161',
+      simuladosRealizados: '0',
+      flashcardsRealizados: '0',
+      questoesFeitas: '0',
+      respostasCorretas: '0',
+      respostasIncorretas: '0',
     },
     {
       email: 'ronaldvieira286@gmail.com',
@@ -15,9 +20,14 @@ export const infoUsers = [
       college: 'Unijorge',
       course: 'Engenharia da computação',
       password: '12345678',
+      simuladosRealizados: '0',
+      flashcardsRealizados: '0',
+      questoesFeitas: '0',
+      respostasCorretas: '0',
+      respostasIncorretas: '0',
     },
   ];
-  
+
   export function findUserByEmail(email) {
     return infoUsers.find(user => user.email === email);
   }
